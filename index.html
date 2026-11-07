@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Template/Demo: nicht in Google aufnehmen. Beim Kunden-Livegang diese Zeile LÖSCHEN. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Schlüsseldienst 24h Notdienst</title>
+  <meta name="description" content="24h Schlüsseldienst – Türöffnung zum Festpreis, schnell vor Ort. Jetzt anrufen oder per WhatsApp schreiben.">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js"></script>
+</head>
+<body class="with-bar">
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- ===== Kopfleiste (bleibt oben stehen) ===== -->
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <a class="brand" href="#top" aria-label="Zum Seitenanfang">
+        <span class="brand__icon"><svg aria-hidden="true"><use href="#i-key"/></svg></span>
+        <span class="brand__txt">
+          <strong data-bind="firma">Schlüsseldienst</strong>
+          <small>24h Notdienst · <span data-bind="stadt"></span></small>
+        </span>
+      </a>
+      <nav class="topbar__actions" aria-label="Kontakt">
+        <a class="iconbtn iconbtn--wa" data-href="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp schreiben">
+          <svg aria-hidden="true"><use href="#i-chat"/></svg>
+        </a>
+        <a class="btn btn--call btn--sm" data-href="tel" href="#">
+          <svg aria-hidden="true"><use href="#i-phone"/></svg>
+          <span class="only-lg" data-bind="telefon"></span><span class="only-sm">Anrufen</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <p class="live"><span class="live__dot"></span> Jetzt erreichbar – rund um die Uhr</p>
+        <h1>Ausgesperrt?<br><span class="hl">Schlüsseldienst <span data-bind="stadt"></span></span><br>in ca. <span data-bind="anfahrtMinuten"></span> Min. bei Ihnen</h1>
+        <p class="lead" data-bind="heroText"></p>
+
+        <div class="cta" id="hero-cta">
+          <a class="btn btn--call btn--xl btn--pulse" data-href="tel" href="#">
+            <svg aria-hidden="true"><use href="#i-phone"/></svg>
+            <span><strong>Jetzt anrufen</strong><small data-bind="telefon"></small></span>
+          </a>
+          <a class="btn btn--wa btn--xl" data-href="wa" href="#" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-chat"/></svg>
+            <span><strong>WhatsApp schreiben</strong><small>Standort &amp; Foto schicken</small></span>
+          </a>
+        </div>
+
+        <ul class="trust" data-list="vorteile"></ul>
+      </div>
+    </section>
+
+    <!-- ===== Leistungen ===== -->
+    <section class="sec" id="leistungen">
+      <div class="wrap">
+        <p class="eyebrow">Leistungen</p>
+        <h2>Wobei wir Ihnen helfen</h2>
+        <div class="grid" data-list="leistungen"></div>
+      </div>
+    </section>
+
+    <!-- ===== Preise ===== -->
+    <section class="sec sec--soft" id="preise">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow">Transparente Preise</p>
+        <h2>Festpreis statt böser Überraschung</h2>
+        <p class="muted">Bei uns wissen Sie vorher, was es kostet. Kein Aufschlag vor Ort, keine Fantasie-Rechnung.</p>
+        <div class="prices" data-list="preise"></div>
+        <p class="small muted" data-bind="preisHinweis"></p>
+      </div>
+    </section>
+
+    <!-- ===== Ablauf ===== -->
+    <section class="sec" id="ablauf">
+      <div class="wrap">
+        <p class="eyebrow">So einfach geht's</p>
+        <h2>In 4 Schritten wieder drin</h2>
+        <ol class="steps">
+          <li><strong>Anrufen oder WhatsApp</strong><span>Kurz schildern, was passiert ist und wo Sie stehen.</span></li>
+          <li><strong>Festpreis erfahren</strong><span>Sie bekommen den Preis am Telefon – erst dann fahren wir los.</span></li>
+          <li><strong>Schnell vor Ort</strong><span>In ca. <span data-bind="anfahrtMinuten"></span> Minuten sind wir bei Ihnen.</span></li>
+          <li><strong>Tür offen, fair bezahlen</strong><span><span data-bind="zahlungsarten"></span> – mit ordentlicher Rechnung.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== Einsatzgebiet ===== -->
+    <section class="sec sec--soft" id="gebiet">
+      <div class="wrap">
+        <p class="eyebrow">Einsatzgebiet</p>
+        <h2>Schnell in <span data-bind="stadt"></span> &amp; Umgebung</h2>
+        <ul class="chips" data-list="einsatzgebiet"></ul>
+      </div>
+    </section>
+
+    <!-- ===== Bewertungen (nur sichtbar, wenn in config.js eingetragen) ===== -->
+    <section class="sec" id="bewertungen" hidden>
+      <div class="wrap">
+        <p class="eyebrow">Bewertungen</p>
+        <h2>Das sagen unsere Kunden</h2>
+        <div class="grid" data-list="bewertungen"></div>
+        <p class="center"><a class="link" data-href="google" href="#" target="_blank" rel="noopener" hidden>Alle Bewertungen auf Google ansehen →</a></p>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="sec" id="faq">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow">Häufige Fragen</p>
+        <h2>Gut zu wissen</h2>
+        <div class="faq">
+          <details>
+            <summary>Was kostet eine Türöffnung?</summary>
+            <p>Die Preise oben sind Richtwerte. Den genauen Festpreis nennen wir Ihnen am Telefon, bevor wir losfahren – daran ändert sich vor Ort nichts, solange die Situation so ist wie beschrieben.</p>
+          </details>
+          <details>
+            <summary>Wie schnell sind Sie da?</summary>
+            <p>Im Einsatzgebiet in der Regel in ca. <span data-bind="anfahrtMinuten"></span> Minuten – rund um die Uhr, auch nachts und an Feiertagen.</p>
+          </details>
+          <details>
+            <summary>Wird meine Tür beschädigt?</summary>
+            <p>Eine nur zugefallene Tür öffnen wir fast immer ohne Schaden. Ist sie abgeschlossen, muss manchmal der Zylinder getauscht werden – das besprechen wir vorher mit Ihnen.</p>
+          </details>
+          <details>
+            <summary>Kann ich mit Karte bezahlen?</summary>
+            <p>Ja. Sie können mit <span data-bind="zahlungsarten"></span> bezahlen und erhalten immer eine ordentliche Rechnung.</p>
+          </details>
+          <details>
+            <summary>Muss ich nachweisen, dass ich dort wohne?</summary>
+            <p>Ja – zu Ihrer eigenen Sicherheit. Nach der Öffnung zeigen Sie uns bitte Ausweis oder Meldebescheinigung.</p>
+          </details>
+          <details>
+            <summary>Woran erkenne ich einen seriösen Schlüsseldienst?</summary>
+            <p>Echte Adresse vor Ort, Festpreis vor der Anfahrt, Kartenzahlung und eine ordentliche Rechnung. Unterschreiben Sie nichts, bevor der Preis klar ist.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Abschluss-CTA ===== -->
+    <section class="final">
+      <div class="wrap center">
+        <h2>Tür zu? Wir sind in ca. <span data-bind="anfahrtMinuten"></span> Min. da.</h2>
+        <p>Rufen Sie an – wir nennen Ihnen sofort den Festpreis.</p>
+        <a class="btn btn--call btn--xl btn--inline" data-href="tel" href="#">
+          <svg aria-hidden="true"><use href="#i-phone"/></svg>
+          <span><strong data-bind="telefon"></strong><small>24 Stunden erreichbar</small></span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <div>
+        <strong data-bind="firma"></strong><br>
+        <span data-bind="adresse.strasse"></span>, <span data-bind="adresse.plz"></span> <span data-bind="adresse.ort"></span><br>
+        Tel. <a data-href="tel" href="#" data-bind="telefon"></a>
+      </div>
+      <nav class="footer__links" aria-label="Rechtliches">
+        <a href="impressum.html" data-keep>Impressum</a>
+        <a href="datenschutz.html" data-keep>Datenschutz</a>
+      </nav>
+      <p class="small">© <span data-bind="jahr"></span> <span data-bind="firma"></span></p>
+    </div>
+  </footer>
+
+  <!-- ===== Kontaktleiste unten (erscheint beim Scrollen) ===== -->
+  <div class="actionbar" role="region" aria-label="Schnellkontakt">
+    <a class="btn btn--call" data-href="tel" href="#">
+      <svg aria-hidden="true"><use href="#i-phone"/></svg> Anrufen
+    </a>
+    <a class="btn btn--wa" data-href="wa" href="#" target="_blank" rel="noopener">
+      <svg aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp
+    </a>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

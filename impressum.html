@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Impressum</title>
+  <meta name="theme-color" content="#0b1220">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js"></script>
+</head>
+<!-- MUSTER-IMPRESSUM: vor Livegang mit den echten Daten des Kunden prüfen (§ 5 DDG). -->
+<body class="with-bar" data-page="Impressum">
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <a class="brand" href="index.html" data-keep>
+        <span class="brand__icon"><svg aria-hidden="true"><use href="#i-key"/></svg></span>
+        <span class="brand__txt"><strong data-bind="firma">Schlüsseldienst</strong><small>24h Notdienst · <span data-bind="stadt"></span></small></span>
+      </a>
+      <nav class="topbar__actions" aria-label="Kontakt">
+        <a class="iconbtn iconbtn--wa" data-href="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp schreiben"><svg aria-hidden="true"><use href="#i-chat"/></svg></a>
+        <a class="btn btn--call btn--sm" data-href="tel" href="#"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="only-lg" data-bind="telefon"></span><span class="only-sm">Anrufen</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="legal" id="main">
+    <div class="wrap wrap--narrow">
+      <a class="back" href="index.html" data-keep>← Zur Startseite</a>
+      <h1>Impressum</h1>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        <span data-bind="firma"></span><br>
+        Inhaber: <span data-bind="inhaber"></span><br>
+        <span data-bind="adresse.strasse"></span><br>
+        <span data-bind="adresse.plz"></span> <span data-bind="adresse.ort"></span><br>
+        Rechtsform: <span data-bind="impressum.rechtsform"></span>
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Telefon: <a data-href="tel" href="#" data-bind="telefon"></a><br>
+        E-Mail: <a data-href="mail" href="#" data-bind="email"></a>
+      </p>
+
+      <div data-if="impressum.ustId">
+        <h2>Umsatzsteuer-ID</h2>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: <span data-bind="impressum.ustId"></span></p>
+      </div>
+
+      <div data-if="impressum.handelsregister">
+        <h2>Registereintrag</h2>
+        <p data-bind="impressum.handelsregister"></p>
+      </div>
+
+      <div data-if="impressum.kammer">
+        <h2>Zuständige Kammer</h2>
+        <p data-bind="impressum.kammer"></p>
+      </div>
+
+      <div data-if="impressum.berufsbezeichnung">
+        <h2>Berufsbezeichnung</h2>
+        <p data-bind="impressum.berufsbezeichnung"></p>
+      </div>
+
+      <h2>Verbraucherstreitbeilegung</h2>
+      <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <div><strong data-bind="firma"></strong></div>
+      <nav class="footer__links" aria-label="Rechtliches">
+        <a href="impressum.html" data-keep>Impressum</a>
+        <a href="datenschutz.html" data-keep>Datenschutz</a>
+      </nav>
+      <p class="small">© <span data-bind="jahr"></span> <span data-bind="firma"></span></p>
+    </div>
+  </footer>
+
+  <div class="actionbar" role="region" aria-label="Schnellkontakt">
+    <a class="btn btn--call" data-href="tel" href="#"><svg aria-hidden="true"><use href="#i-phone"/></svg> Anrufen</a>
+    <a class="btn btn--wa" data-href="wa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp</a>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Datenschutz</title>
+  <meta name="theme-color" content="#0b1220">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js"></script>
+</head>
+<!-- MUSTER-DATENSCHUTZERKLÄRUNG: vor Livegang prüfen bzw. mit einem Generator für den Kunden erstellen. -->
+<body class="with-bar" data-page="Datenschutz">
+  <header class="topbar">
+    <div class="wrap topbar__in">
+      <a class="brand" href="index.html" data-keep>
+        <span class="brand__icon"><svg aria-hidden="true"><use href="#i-key"/></svg></span>
+        <span class="brand__txt"><strong data-bind="firma">Schlüsseldienst</strong><small>24h Notdienst · <span data-bind="stadt"></span></small></span>
+      </a>
+      <nav class="topbar__actions" aria-label="Kontakt">
+        <a class="iconbtn iconbtn--wa" data-href="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp schreiben"><svg aria-hidden="true"><use href="#i-chat"/></svg></a>
+        <a class="btn btn--call btn--sm" data-href="tel" href="#"><svg aria-hidden="true"><use href="#i-phone"/></svg><span class="only-lg" data-bind="telefon"></span><span class="only-sm">Anrufen</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="legal" id="main">
+    <div class="wrap wrap--narrow">
+      <a class="back" href="index.html" data-keep>← Zur Startseite</a>
+      <h1>Datenschutzerklärung</h1>
+
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        <span data-bind="firma"></span>, Inhaber <span data-bind="inhaber"></span><br>
+        <span data-bind="adresse.strasse"></span>, <span data-bind="adresse.plz"></span> <span data-bind="adresse.ort"></span><br>
+        Telefon: <span data-bind="telefon"></span> · E-Mail: <span data-bind="email"></span>
+      </p>
+
+      <h2>2. Hosting</h2>
+      <p data-hosting="cloudflare">Diese Website wird über Cloudflare Pages bereitgestellt (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA). Beim Aufruf verarbeitet Cloudflare technisch notwendige Daten wie Ihre IP-Adresse, Datum und Uhrzeit sowie den Browsertyp, um die Seite schnell und sicher auszuliefern und Angriffe abzuwehren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren und zuverlässigen Bereitstellung). Eine Übermittlung in die USA kann dabei nicht ausgeschlossen werden; Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert. Mit Cloudflare besteht ein Auftragsverarbeitungsvertrag.</p>
+      <p data-hosting="github">Diese Website wird über GitHub Pages bereitgestellt (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten wie Ihre IP-Adresse, Datum und Uhrzeit sowie den Browsertyp, um die Seite auszuliefern und die Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren und zuverlässigen Bereitstellung). Eine Übermittlung in die USA kann dabei nicht ausgeschlossen werden; GitHub ist nach dem EU-US Data Privacy Framework zertifiziert.</p>
+
+      <h2>3. Keine Cookies, kein Tracking</h2>
+      <p>Diese Website setzt keine Cookies, nutzt keine Analyse- oder Werbedienste und lädt keine externen Schriftarten oder Skripte.</p>
+
+      <h2>4. Kontakt per Telefon</h2>
+      <p>Wenn Sie uns anrufen, verarbeiten wir Ihre Telefonnummer und die Angaben, die Sie uns nennen, um Ihren Auftrag zu bearbeiten (Art. 6 Abs. 1 lit. b DSGVO).</p>
+
+      <h2>5. Kontakt per WhatsApp</h2>
+      <p>Der WhatsApp-Button ist ein einfacher Link. Erst wenn Sie ihn antippen, wird WhatsApp geöffnet. WhatsApp wird von der WhatsApp Ireland Limited (4 Grand Canal Square, Dublin 2, Irland), einem Unternehmen der Meta-Gruppe, betrieben. Dabei können Daten an Meta übermittelt und auch in den USA verarbeitet werden. Wenn Sie uns per WhatsApp schreiben, verarbeiten wir Ihre Nachricht, Telefonnummer sowie ggf. Standort und Fotos zur Bearbeitung Ihres Auftrags (Art. 6 Abs. 1 lit. b DSGVO). Wenn Sie das nicht möchten, rufen Sie uns bitte einfach an.</p>
+
+      <h2>6. Speicherdauer</h2>
+      <p>Wir speichern Ihre Daten nur so lange, wie es für die Auftragsabwicklung nötig ist oder gesetzliche Aufbewahrungspflichten (z. B. für Rechnungen) bestehen.</p>
+
+      <h2>7. Ihre Rechte</h2>
+      <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO). Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, z. B. bei der zuständigen Behörde Ihres Bundeslandes.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <div><strong data-bind="firma"></strong></div>
+      <nav class="footer__links" aria-label="Rechtliches">
+        <a href="impressum.html" data-keep>Impressum</a>
+        <a href="datenschutz.html" data-keep>Datenschutz</a>
+      </nav>
+      <p class="small">© <span data-bind="jahr"></span> <span data-bind="firma"></span></p>
+    </div>
+  </footer>
+
+  <div class="actionbar" role="region" aria-label="Schnellkontakt">
+    <a class="btn btn--call" data-href="tel" href="#"><svg aria-hidden="true"><use href="#i-phone"/></svg> Anrufen</a>
+    <a class="btn btn--wa" data-href="wa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp</a>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
