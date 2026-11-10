@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
   <title>Impressum</title>
-  <meta name="theme-color" content="#0b1220">
+  <meta name="theme-color" content="#060a13">
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="config.js"></script>
 </head>
 <!-- MUSTER-IMPRESSUM: vor Livegang mit den echten Daten des Kunden prüfen (§ 5 DDG). -->
-<body class="with-bar" data-page="Impressum">
+<body data-page="Impressum">
+  <div class="demobar" id="demobar" hidden>
+    <span class="demobar__tag">Vorschau</span>
+    <span class="demobar__txt">für <strong data-bind="firma"></strong><span class="demobar__more"> · noch nicht online</span><span class="demobar__more" id="demobar-von"></span></span>
+    <a class="demobar__btn" id="demobar-btn" href="#" target="_blank" rel="noopener" hidden>Seite anfragen →</a>
+  </div>
+
   <header class="topbar">
     <div class="wrap topbar__in">
       <a class="brand" href="index.html" data-keep>
@@ -30,6 +36,8 @@
     <div class="wrap wrap--narrow">
       <a class="back" href="index.html" data-keep>← Zur Startseite</a>
       <h1>Impressum</h1>
+
+      <p class="demo-note" data-demo-note hidden><strong>Vorschau:</strong> Die Angaben auf dieser Seite sind Platzhalter. Vor der Veröffentlichung werden sie durch die echten Daten des Betriebs ersetzt.</p>
 
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>

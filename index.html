@@ -7,14 +7,29 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Schlüsseldienst 24h Notdienst</title>
   <meta name="description" content="24h Schlüsseldienst – Türöffnung zum Festpreis, schnell vor Ort. Jetzt anrufen oder per WhatsApp schreiben.">
-  <meta name="theme-color" content="#0b1220">
+  <meta name="theme-color" content="#060a13">
   <meta name="format-detection" content="telephone=no">
+  <!-- Link-Vorschau (WhatsApp & Co.). Beim Kunden-Livegang die Bild-Adresse auf die Kunden-Domain ändern. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="24h Schlüsseldienst – Festpreis, schnell vor Ort">
+  <meta property="og:description" content="Türöffnung zum Festpreis. Jetzt anrufen oder per WhatsApp schreiben.">
+  <meta property="og:image" content="https://mcbebop.github.io/schluesseldienst-demo/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="config.js"></script>
 </head>
-<body class="with-bar">
+<body>
   <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- ===== Vorschau-Streifen (erscheint nur bei personalisierten Demo-Links) ===== -->
+  <div class="demobar" id="demobar" hidden>
+    <span class="demobar__tag">Vorschau</span>
+    <span class="demobar__txt">für <strong data-bind="firma"></strong><span class="demobar__more"> · noch nicht online</span><span class="demobar__more" id="demobar-von"></span></span>
+    <a class="demobar__btn" id="demobar-btn" href="#" target="_blank" rel="noopener" hidden>Seite anfragen →</a>
+  </div>
 
   <!-- ===== Kopfleiste (bleibt oben stehen) ===== -->
   <header class="topbar">
@@ -26,6 +41,12 @@
           <small>24h Notdienst · <span data-bind="stadt"></span></small>
         </span>
       </a>
+      <nav class="topnav" aria-label="Seitenbereiche">
+        <a href="#leistungen">Leistungen</a>
+        <a href="#preise">Preise</a>
+        <a href="#ablauf">Ablauf</a>
+        <a href="#faq">Fragen</a>
+      </nav>
       <nav class="topbar__actions" aria-label="Kontakt">
         <a class="iconbtn iconbtn--wa" data-href="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp schreiben">
           <svg aria-hidden="true"><use href="#i-chat"/></svg>
@@ -41,51 +62,136 @@
   <main id="main">
     <!-- ===== Hero ===== -->
     <section class="hero" id="top">
-      <div class="wrap">
-        <p class="live"><span class="live__dot"></span> Jetzt erreichbar – rund um die Uhr</p>
-        <h1>Ausgesperrt?<br><span class="hl">Schlüsseldienst <span data-bind="stadt"></span></span><br>in ca. <span data-bind="anfahrtMinuten"></span> Min. bei Ihnen</h1>
-        <p class="lead" data-bind="heroText"></p>
+      <div class="hero__bg" aria-hidden="true"><i class="glow glow--a"></i><i class="glow glow--b"></i><i class="gridfx"></i></div>
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="live"><span class="live__dot"></span>Jetzt erreichbar<span class="live__time" data-clock hidden></span></p>
+          <h1>
+            <span class="h1__q">Ausgesperrt?</span>
+            <span class="h1__hl">Schlüsseldienst <span data-bind="stadt"></span></span>
+            <span class="h1__sub">in ca. <span data-bind="anfahrtMinuten"></span> Min. bei Ihnen</span>
+          </h1>
+          <p class="lead" data-bind="heroText"></p>
 
-        <div class="cta" id="hero-cta">
-          <a class="btn btn--call btn--xl btn--pulse" data-href="tel" href="#">
-            <svg aria-hidden="true"><use href="#i-phone"/></svg>
-            <span><strong>Jetzt anrufen</strong><small data-bind="telefon"></small></span>
-          </a>
-          <a class="btn btn--wa btn--xl" data-href="wa" href="#" target="_blank" rel="noopener">
-            <svg aria-hidden="true"><use href="#i-chat"/></svg>
-            <span><strong>WhatsApp schreiben</strong><small>Standort &amp; Foto schicken</small></span>
-          </a>
+          <div class="cta" id="hero-cta">
+            <a class="btn btn--call btn--xl btn--pulse" data-href="tel" href="#">
+              <span class="btn__ico"><svg aria-hidden="true"><use href="#i-phone"/></svg></span>
+              <span class="btn__txt"><strong>Jetzt anrufen</strong><small data-bind="telefon"></small></span>
+            </a>
+            <a class="btn btn--wa btn--xl" data-href="wa" href="#" target="_blank" rel="noopener">
+              <span class="btn__ico"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>
+              <span class="btn__txt"><strong>WhatsApp schreiben</strong><small>Standort &amp; Foto schicken</small></span>
+            </a>
+          </div>
+
+          <!-- Rechnet die Anfahrtszeit aus config.js in eine Uhrzeit um -->
+          <p class="eta" id="eta" hidden>
+            <svg aria-hidden="true"><use href="#i-clock"/></svg>
+            <span><small>Wenn Sie jetzt anrufen</small><strong>ca. <span data-eta></span> bei Ihnen</strong></span>
+          </p>
+
+          <ul class="trust" data-list="vorteile"></ul>
         </div>
 
-        <ul class="trust" data-list="vorteile"></ul>
+        <!-- ===== Schnellanfrage: baut eine fertige WhatsApp-Nachricht ===== -->
+        <aside class="quick" id="anfrage" aria-labelledby="quick-h">
+          <header class="quick__head">
+            <span class="quick__icon"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>
+            <div>
+              <h2 id="quick-h">Schnellanfrage per WhatsApp</h2>
+              <p>Antippen statt schreiben</p>
+            </div>
+          </header>
+
+          <div class="quick__step" id="quick-was">
+            <p class="quick__label"><b>1</b>Was ist passiert?</p>
+            <div class="pick" data-list="situationen" role="group" aria-label="Was ist passiert?"></div>
+          </div>
+
+          <div class="quick__step" id="quick-ort">
+            <p class="quick__label"><b>2</b>Wo sind Sie?</p>
+            <button class="locbtn" type="button" id="loc-btn">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              <span>Meinen Standort anhängen</span>
+            </button>
+            <p class="quick__hint" id="loc-hint" aria-live="polite"></p>
+          </div>
+
+          <div class="bubble" aria-label="Vorschau Ihrer Nachricht">
+            <p id="quick-preview"></p>
+            <span class="bubble__meta">Vorschau</span>
+          </div>
+
+          <a class="btn btn--wa btn--block" id="quick-send" href="#" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-chat"/></svg>
+            In WhatsApp öffnen
+          </a>
+          <p class="quick__fine">Es wird nichts automatisch gesendet – Sie schicken die Nachricht in WhatsApp selbst ab.</p>
+        </aside>
       </div>
     </section>
 
     <!-- ===== Leistungen ===== -->
-    <section class="sec" id="leistungen">
+    <section class="sec sec--first" id="leistungen">
       <div class="wrap">
-        <p class="eyebrow">Leistungen</p>
-        <h2>Wobei wir Ihnen helfen</h2>
+        <header class="sec__head">
+          <p class="eyebrow">Leistungen</p>
+          <h2>Wobei wir Ihnen helfen</h2>
+        </header>
         <div class="grid" data-list="leistungen"></div>
       </div>
     </section>
 
     <!-- ===== Preise ===== -->
     <section class="sec sec--soft" id="preise">
-      <div class="wrap wrap--narrow">
-        <p class="eyebrow">Transparente Preise</p>
-        <h2>Festpreis statt böser Überraschung</h2>
-        <p class="muted">Bei uns wissen Sie vorher, was es kostet. Kein Aufschlag vor Ort, keine Fantasie-Rechnung.</p>
-        <div class="prices" data-list="preise"></div>
-        <p class="small muted" data-bind="preisHinweis"></p>
+      <div class="wrap split">
+        <div class="split__txt">
+          <p class="eyebrow">Transparente Preise</p>
+          <h2>Festpreis statt böser Überraschung</h2>
+          <p class="muted">Bei uns wissen Sie vorher, was es kostet. Kein Aufschlag vor Ort, keine Fantasie-Rechnung.</p>
+          <ul class="ticks">
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Der Preis steht fest, bevor wir losfahren</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Zahlung: <span data-bind="zahlungsarten"></span></span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Immer mit ordentlicher Rechnung</span></li>
+          </ul>
+        </div>
+        <div class="receipt">
+          <div class="stamp" aria-hidden="true"><b>Festpreis</b><small>vorab am Telefon</small></div>
+          <p class="receipt__title">Preisübersicht</p>
+          <div class="prices" data-list="preise"></div>
+          <p class="receipt__note" data-bind="preisHinweis"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Fair-Check (nur sichtbar, wenn in config.js gefüllt) ===== -->
+    <section class="sec sec--night" id="fair" hidden>
+      <div class="wrap">
+        <header class="sec__head">
+          <p class="eyebrow">Fair statt Abzocke</p>
+          <h2>Woran Sie einen seriösen Schlüsseldienst erkennen</h2>
+          <p class="sec__sub">Leider gibt es in unserer Branche schwarze Schafe. Achten Sie auf diese Punkte – am besten, bevor jemand losfährt.</p>
+        </header>
+        <div class="versus">
+          <div class="versus__col versus__col--bad">
+            <h3>Unseriöse Anbieter</h3>
+            <ul data-list="fair.unserioes"></ul>
+          </div>
+          <div class="versus__col versus__col--good">
+            <h3><span class="versus__badge">Bei uns</span><span data-bind="firma"></span></h3>
+            <ul data-list="fair.wir"></ul>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ===== Ablauf ===== -->
     <section class="sec" id="ablauf">
       <div class="wrap">
-        <p class="eyebrow">So einfach geht's</p>
-        <h2>In 4 Schritten wieder drin</h2>
+        <header class="sec__head">
+          <p class="eyebrow">So einfach geht's</p>
+          <h2>In 4 Schritten wieder drin</h2>
+        </header>
         <ol class="steps">
           <li><strong>Anrufen oder WhatsApp</strong><span>Kurz schildern, was passiert ist und wo Sie stehen.</span></li>
           <li><strong>Festpreis erfahren</strong><span>Sie bekommen den Preis am Telefon – erst dann fahren wir los.</span></li>
@@ -97,28 +203,41 @@
 
     <!-- ===== Einsatzgebiet ===== -->
     <section class="sec sec--soft" id="gebiet">
-      <div class="wrap">
-        <p class="eyebrow">Einsatzgebiet</p>
-        <h2>Schnell in <span data-bind="stadt"></span> &amp; Umgebung</h2>
-        <ul class="chips" data-list="einsatzgebiet"></ul>
+      <div class="wrap area">
+        <div class="radar" aria-hidden="true">
+          <i></i><i></i><i></i>
+          <span class="radar__pulse"></span>
+          <span class="radar__pin"><svg><use href="#i-pin"/></svg></span>
+          <span class="radar__label" data-bind="stadt"></span>
+        </div>
+        <div class="area__txt">
+          <p class="eyebrow">Einsatzgebiet</p>
+          <h2>Schnell in <span data-bind="stadt"></span> &amp; Umgebung</h2>
+          <p class="muted">Im Einsatzgebiet in der Regel in ca. <span data-bind="anfahrtMinuten"></span> Minuten bei Ihnen – rund um die Uhr.</p>
+          <ul class="chips" data-list="einsatzgebiet"></ul>
+        </div>
       </div>
     </section>
 
     <!-- ===== Bewertungen (nur sichtbar, wenn in config.js eingetragen) ===== -->
     <section class="sec" id="bewertungen" hidden>
       <div class="wrap">
-        <p class="eyebrow">Bewertungen</p>
-        <h2>Das sagen unsere Kunden</h2>
+        <header class="sec__head">
+          <p class="eyebrow">Bewertungen</p>
+          <h2>Das sagen unsere Kunden</h2>
+        </header>
         <div class="grid" data-list="bewertungen"></div>
-        <p class="center"><a class="link" data-href="google" href="#" target="_blank" rel="noopener" hidden>Alle Bewertungen auf Google ansehen →</a></p>
+        <p class="center more"><a class="link" data-href="google" href="#" target="_blank" rel="noopener" hidden>Alle Bewertungen auf Google ansehen →</a></p>
       </div>
     </section>
 
     <!-- ===== FAQ ===== -->
     <section class="sec" id="faq">
       <div class="wrap wrap--narrow">
-        <p class="eyebrow">Häufige Fragen</p>
-        <h2>Gut zu wissen</h2>
+        <header class="sec__head">
+          <p class="eyebrow">Häufige Fragen</p>
+          <h2>Gut zu wissen</h2>
+        </header>
         <div class="faq">
           <details>
             <summary>Was kostet eine Türöffnung?</summary>
@@ -151,12 +270,19 @@
     <!-- ===== Abschluss-CTA ===== -->
     <section class="final">
       <div class="wrap center">
+        <div class="lockplate" aria-hidden="true"><svg viewBox="0 0 100 106"><path d="M40 55.8 30 96h40L60 55.8A24 24 0 1 0 40 55.8Z"/></svg></div>
         <h2>Tür zu? Wir sind in ca. <span data-bind="anfahrtMinuten"></span> Min. da.</h2>
         <p>Rufen Sie an – wir nennen Ihnen sofort den Festpreis.</p>
-        <a class="btn btn--call btn--xl btn--inline" data-href="tel" href="#">
-          <svg aria-hidden="true"><use href="#i-phone"/></svg>
-          <span><strong data-bind="telefon"></strong><small>24 Stunden erreichbar</small></span>
-        </a>
+        <div class="final__cta">
+          <a class="btn btn--call btn--xl" data-href="tel" href="#">
+            <span class="btn__ico"><svg aria-hidden="true"><use href="#i-phone"/></svg></span>
+            <span class="btn__txt"><strong data-bind="telefon"></strong><small>24 Stunden erreichbar</small></span>
+          </a>
+          <a class="btn btn--wa btn--xl" data-href="wa" href="#" target="_blank" rel="noopener">
+            <span class="btn__ico"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>
+            <span class="btn__txt"><strong>WhatsApp</strong><small>Standort &amp; Foto schicken</small></span>
+          </a>
+        </div>
       </div>
     </section>
   </main>

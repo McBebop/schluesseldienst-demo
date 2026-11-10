@@ -32,6 +32,19 @@ window.SITE_CONFIG = {
     "Ordentliche Rechnung"
   ],
 
+  // --- Schnellanfrage per WhatsApp (Kasten oben auf der Startseite) -----------
+  // Der Kunde tippt an, was passiert ist, hängt auf Wunsch seinen Standort an
+  // und bekommt eine fertige WhatsApp-Nachricht. Liste leer = Auswahl ausgeblendet.
+  anfrageText: "Hallo, ich brauche einen Schlüsseldienst.",
+  situationen: [
+    "Tür zugefallen",
+    "Tür abgeschlossen",
+    "Schlüssel abgebrochen",
+    "Schlüssel verloren",
+    "Schlüssel im Auto",
+    "Schloss defekt"
+  ],
+
   // --- Leistungen (icon: tuer | auto | schloss | schutz | tresor | einbruch) --
   leistungen: [
     { icon: "tuer",     titel: "Türöffnung",          text: "Tür zugefallen oder Schlüssel abgebrochen? Wir öffnen Wohnungs- und Haustüren schnell und schonend." },
@@ -52,6 +65,24 @@ window.SITE_CONFIG = {
   preisHinweis: "Alle Preise inkl. 19 % MwSt. Anfahrt im Einsatzgebiet inklusive. Den genauen Festpreis nennen wir Ihnen vor der Abfahrt am Telefon.",
 
   zahlungsarten: "Bar, EC-Karte und Kreditkarte",
+
+  // --- Fair-Check (Vergleich „unseriöse Anbieter" / dieser Betrieb) ----------
+  // Rechte Spalte („wir") NUR mit Aussagen füllen, die der Kunde wirklich einhält.
+  // „wir" leer lassen = Bereich wird automatisch ausgeblendet.
+  fair: {
+    unserioes: [
+      "Preis erst nach der Türöffnung",
+      "Hohe Zuschläge für Anfahrt und Nachtzeit",
+      "Nur Barzahlung, keine Rechnung",
+      "Schloss wird unnötig aufgebohrt"
+    ],
+    wir: [
+      "Festpreis am Telefon – vor der Abfahrt",
+      "Anfahrt im Einsatzgebiet inklusive",
+      "Kartenzahlung und ordentliche Rechnung",
+      "Zugefallene Türen meist ohne Schaden geöffnet"
+    ]
+  },
 
   // --- Einsatzgebiet ---------------------------------------------------------
   einsatzgebiet: [
@@ -80,5 +111,15 @@ window.SITE_CONFIG = {
 
   // --- Design ----------------------------------------------------------------
   farbe: "#f5a524",           // Akzentfarbe (Anruf-Button, Highlights) – hell, aber NICHT grün (WhatsApp ist grün)
-  farbeText: "#111827"        // Textfarbe AUF der Akzentfarbe
+  farbeText: "#111827",       // Textfarbe AUF der Akzentfarbe
+
+  // --- Demo / Vorschau-Links (nur für die Akquise) ---------------------------
+  // Vorschau-Links (?name=…&tel=…&stadt=…) funktionieren nur, solange die Seite
+  // auf „noindex" steht. Auf einer veröffentlichten Kundenseite sind sie automatisch aus.
+  demo: {
+    aktiv: true,              // false = Vorschau-Links ganz abschalten
+    streifen: true,           // Streifen „Vorschau für … · noch nicht online" bei Vorschau-Links
+    anbieter: "",             // dein Name / deine Firma, z. B. "Müller Webdesign" (optional)
+    whatsapp: ""              // deine WhatsApp-Nummer → Knopf „Seite anfragen" im Streifen (optional)
+  }
 };

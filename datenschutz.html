@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
   <title>Datenschutz</title>
-  <meta name="theme-color" content="#0b1220">
+  <meta name="theme-color" content="#060a13">
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="config.js"></script>
 </head>
 <!-- MUSTER-DATENSCHUTZERKLÄRUNG: vor Livegang prüfen bzw. mit einem Generator für den Kunden erstellen. -->
-<body class="with-bar" data-page="Datenschutz">
+<body data-page="Datenschutz">
+  <div class="demobar" id="demobar" hidden>
+    <span class="demobar__tag">Vorschau</span>
+    <span class="demobar__txt">für <strong data-bind="firma"></strong><span class="demobar__more"> · noch nicht online</span><span class="demobar__more" id="demobar-von"></span></span>
+    <a class="demobar__btn" id="demobar-btn" href="#" target="_blank" rel="noopener" hidden>Seite anfragen →</a>
+  </div>
+
   <header class="topbar">
     <div class="wrap topbar__in">
       <a class="brand" href="index.html" data-keep>
@@ -30,6 +36,8 @@
     <div class="wrap wrap--narrow">
       <a class="back" href="index.html" data-keep>← Zur Startseite</a>
       <h1>Datenschutzerklärung</h1>
+
+      <p class="demo-note" data-demo-note hidden><strong>Vorschau:</strong> Die Angaben auf dieser Seite sind Platzhalter. Vor der Veröffentlichung werden sie durch die echten Daten des Betriebs ersetzt.</p>
 
       <h2>1. Verantwortlicher</h2>
       <p>
@@ -51,10 +59,13 @@
       <h2>5. Kontakt per WhatsApp</h2>
       <p>Der WhatsApp-Button ist ein einfacher Link. Erst wenn Sie ihn antippen, wird WhatsApp geöffnet. WhatsApp wird von der WhatsApp Ireland Limited (4 Grand Canal Square, Dublin 2, Irland), einem Unternehmen der Meta-Gruppe, betrieben. Dabei können Daten an Meta übermittelt und auch in den USA verarbeitet werden. Wenn Sie uns per WhatsApp schreiben, verarbeiten wir Ihre Nachricht, Telefonnummer sowie ggf. Standort und Fotos zur Bearbeitung Ihres Auftrags (Art. 6 Abs. 1 lit. b DSGVO). Wenn Sie das nicht möchten, rufen Sie uns bitte einfach an.</p>
 
-      <h2>6. Speicherdauer</h2>
+      <h2>6. Standort in der Schnellanfrage</h2>
+      <p>In der Schnellanfrage auf der Startseite können Sie Ihrer WhatsApp-Nachricht freiwillig Ihren Standort anhängen. Erst wenn Sie auf „Meinen Standort anhängen“ tippen und der Abfrage Ihres Browsers zustimmen, wird Ihr Standort einmalig auf Ihrem Gerät ermittelt und als Kartenlink (Google Maps) in den Nachrichtenentwurf eingefügt. Diese Website speichert Ihren Standort nicht und überträgt ihn weder an uns noch an Dritte. Wir erhalten ihn erst, wenn Sie die Nachricht in WhatsApp selbst absenden, und nutzen ihn dann nur für die Anfahrt (Art. 6 Abs. 1 lit. b DSGVO). Eine Verbindung zu Google entsteht erst, wenn der Kartenlink geöffnet wird.</p>
+
+      <h2>7. Speicherdauer</h2>
       <p>Wir speichern Ihre Daten nur so lange, wie es für die Auftragsabwicklung nötig ist oder gesetzliche Aufbewahrungspflichten (z. B. für Rechnungen) bestehen.</p>
 
-      <h2>7. Ihre Rechte</h2>
+      <h2>8. Ihre Rechte</h2>
       <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15–21 DSGVO). Außerdem können Sie sich bei einer Datenschutz-Aufsichtsbehörde beschweren, z. B. bei der zuständigen Behörde Ihres Bundeslandes.</p>
     </div>
   </main>

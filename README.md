@@ -5,11 +5,13 @@ Mobil-optimierte One-Page-Website für Schlüsseldienste. Rein statisch (HTML/CS
 **Features**
 - Kopfleiste mit Anruf- und WhatsApp-Button, bleibt beim Scrollen oben stehen
 - Kontaktleiste unten (Anrufen / WhatsApp), fährt ein, sobald die großen Buttons oben aus dem Bild gescrollt sind
-- WhatsApp-Button öffnet den Chat mit vorformulierter Nachricht
-- Leistungen, Festpreis-Tabelle, Ablauf, Einsatzgebiet, Bewertungen, FAQ
+- **Live-Uhr und Ankunftszeit:** aus der Anfahrtszeit („20–30“) wird automatisch eine Uhrzeit („ca. 17:15–17:25 Uhr bei Ihnen“)
+- **Schnellanfrage per WhatsApp:** Kunde tippt an, was passiert ist, hängt auf Wunsch seinen Standort an und bekommt eine fertige Nachricht
+- Leistungen (jede mit eigenem WhatsApp-Link), Festpreis-Übersicht, **Fair-Check** (seriös / unseriös), Ablauf, Einsatzgebiet, Bewertungen, FAQ
 - Impressum und Datenschutzerklärung (Muster), automatisch mit Kundendaten befüllt
 - Strukturierte Daten für Google (Locksmith, 24/7)
-- **Demo-Links:** eine Seite, beliebig viele personalisierte Vorschauen per URL
+- Vorschaubild für Links in WhatsApp & Co. (`og.jpg`)
+- **Demo-Links:** eine Seite, beliebig viele personalisierte Vorschauen per URL – mit „Vorschau“-Streifen
 
 ## Dateien
 
@@ -19,8 +21,9 @@ Mobil-optimierte One-Page-Website für Schlüsseldienste. Rein statisch (HTML/CS
 | `index.html` | Startseite |
 | `impressum.html`, `datenschutz.html` | Rechtliche Seiten |
 | `style.css` | Design |
-| `app.js` | Logik (Daten einsetzen, Kontaktleiste, Demo-Modus) |
+| `app.js` | Logik (Daten einsetzen, Kontaktleiste, Schnellanfrage, Demo-Modus) |
 | `favicon.svg` | Browser-Icon |
+| `og.jpg` | Vorschaubild, das WhatsApp beim Verschicken des Links anzeigt |
 
 ## 1. Auf GitHub Pages veröffentlichen
 
@@ -48,19 +51,28 @@ https://DEIN-GITHUB-NAME.github.io/schluesseldienst-demo/?name=Schlüsseldienst%
 | `min` | Anfahrtszeit in Minuten | `15–25` |
 | `farbe` | Akzentfarbe als Hex ohne `#` (hell, nicht grün) | `facc15` |
 
-Die Parameter bleiben auch beim Klick auf Impressum/Datenschutz erhalten. Die Demo-Seite ist per `noindex` vor Google versteckt, damit keine Seiten mit fremden Firmennamen in den Suchergebnissen landen.
+Gut zu wissen:
+- Die Nummer kannst du ohne Leerzeichen angeben, die Seite zeigt sie lesbar an (`06221123456` → `06221 123456`).
+- Bei `farbe` wählt die Seite automatisch eine gut lesbare Textfarbe (dunkel oder weiß).
+- Bei einem Demo-Link erscheint oben der Streifen **„Vorschau für … · noch nicht online“**, und auf Impressum/Datenschutz steht, dass die Angaben Platzhalter sind. So ist klar, dass die Seite noch nicht die echte Firmenseite ist.
+- Die Parameter bleiben auch beim Klick auf Impressum/Datenschutz erhalten.
+- Die Demo-Seite ist per `noindex` vor Google versteckt, damit keine Seiten mit fremden Firmennamen in den Suchergebnissen landen.
+
+**Knopf „Seite anfragen“ im Vorschau-Streifen:** Trag in `config.js` unter `demo` deine eigene WhatsApp-Nummer ein (`whatsapp`) und auf Wunsch deinen Namen (`anbieter`). Dann kann dir der Interessent direkt aus der Vorschau schreiben.
 
 > Tipp: Schick dem Kunden den Link per WhatsApp – er sieht die Seite sofort auf dem Handy mit seinem Namen und seiner Nummer.
 
 ## 3. Nach dem Verkauf: Kundenseite live schalten
 
 1. Ordner kopieren und ein **eigenes Repo pro Kunde** anlegen (z. B. `schluesseldienst-weber`).
-2. `config.js` komplett mit den echten Daten ausfüllen: Firma, Inhaber, Adresse, Nummern, Preise, Einsatzgebiet, Impressum-Angaben.
+2. `config.js` komplett mit den echten Daten ausfüllen: Firma, Inhaber, Adresse, Nummern, Preise, Einsatzgebiet, Fair-Check, Impressum-Angaben.
 3. In `index.html`, `impressum.html` und `datenschutz.html` die Zeile
    `<meta name="robots" content="noindex, nofollow">` **löschen** (sonst findet Google die Seite nicht).
-4. Hosting wählen (siehe unten) und in `config.js` `hosting` passend setzen.
-5. Eigene Domain verbinden (z. B. `schluesseldienst-weber.de`).
-6. Kurz testen: Anruf-Button, WhatsApp-Button, Impressum.
+   Damit sind auch die Demo-Links automatisch abgeschaltet: Auf einer veröffentlichten Kundenseite kann niemand per Link Name oder Nummer austauschen.
+4. In `index.html` bei `og:image` die Adresse auf die Kunden-Domain ändern (z. B. `https://schluesseldienst-weber.de/og.jpg`).
+5. Hosting wählen (siehe unten) und in `config.js` `hosting` passend setzen.
+6. Eigene Domain verbinden (z. B. `schluesseldienst-weber.de`).
+7. Kurz testen: Anruf-Button, WhatsApp-Button, Schnellanfrage mit Standort, Impressum.
 
 ## 4. Hosting auf Cloudflare Pages
 
@@ -74,13 +86,27 @@ Da die Seite nur aus statischen Dateien besteht, ist der Umzug einfach:
 
 Keine Pfad-Anpassungen nötig: Alle Links sind relativ und funktionieren auf beiden Hosts.
 
-## 5. Bewertungen
+## 5. Schnellanfrage, Fair-Check und Ankunftszeit
+
+Alles wird in `config.js` gesteuert:
+
+| Einstellung | Wirkung |
+|---|---|
+| `situationen` | Auswahl „Was ist passiert?“ in der Schnellanfrage. Leere Liste = Auswahl ausgeblendet. |
+| `anfrageText` | Erster Satz der fertigen WhatsApp-Nachricht |
+| `fair.unserioes` / `fair.wir` | Die beiden Spalten im Fair-Check. `wir` leer = Bereich ausgeblendet. |
+| `anfahrtMinuten` | Wird überall angezeigt und oben in eine Uhrzeit umgerechnet (auf 5 Minuten gerundet). Ohne Zahl entfällt die Uhrzeit. |
+| `whatsapp` leer | Alle WhatsApp-Buttons und die Schnellanfrage verschwinden, die Seite arbeitet nur mit Anruf. |
+
+**Standort in der Schnellanfrage:** Der Standort wird erst abgefragt, wenn der Kunde auf „Meinen Standort anhängen“ tippt und im Browser zustimmt. Er bleibt auf dem Gerät und steht nur als Kartenlink in der Nachricht, die der Kunde selbst in WhatsApp abschickt. Die Website speichert und überträgt nichts. Lehnt der Kunde ab, funktioniert die Anfrage trotzdem.
+
+## 6. Bewertungen
 
 `bewertungen` in `config.js` ist absichtlich leer, der Bereich wird dann ausgeblendet. Trag dort **nur echte Bewertungen** ein (z. B. aus dem Google-Profil des Kunden) und verlinke das Profil unter `googleBewertungenUrl`. Erfundene Bewertungen sind wettbewerbswidrig (UWG) und können abgemahnt werden.
 
-## 6. Rechtliche Hinweise (wichtig)
+## 7. Rechtliche Hinweise (wichtig)
 
-- Impressum und Datenschutzerklärung sind **Muster** und keine Rechtsberatung. Vor dem Livegang mit den echten Angaben des Kunden prüfen bzw. mit einem Generator (z. B. eRecht24, Datenschutz-Generator.de) erstellen.
+- Impressum und Datenschutzerklärung sind **Muster** und keine Rechtsberatung. Vor dem Livegang mit den echten Angaben des Kunden prüfen bzw. mit einem Generator (z. B. eRecht24, Datenschutz-Generator.de) erstellen. Der Abschnitt „Standort in der Schnellanfrage“ muss drin bleiben, solange die Schnellanfrage genutzt wird.
 - Preise müssen Endpreise **inkl. MwSt.** sein (Preisangabenverordnung). Die Beispielpreise in `config.js` mit dem Kunden abstimmen.
-- Werbeaussagen („in ca. 20–30 Min. vor Ort“, „ohne Schaden“) nur so übernehmen, wie der Kunde sie auch einhalten kann.
+- Werbeaussagen („in ca. 20–30 Min. vor Ort“, „ohne Schaden“, die rechte Spalte im Fair-Check, die Haken neben der Preisliste) nur so übernehmen, wie der Kunde sie auch einhalten kann. Die angezeigte Ankunftszeit wird aus `anfahrtMinuten` berechnet – der Wert muss realistisch sein.
 - Die Seite lädt keine Google Fonts und keine externen Skripte, deshalb ist kein Cookie-Banner nötig.
