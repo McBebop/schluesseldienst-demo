@@ -345,6 +345,8 @@
     });
 
     // Schritt 2: Standort anhängen (optional)
+    var ios = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);   // iPad im Desktop-Modus
     function setLoc(state, text) {
       locBtn.className = "locbtn" + (state ? " is-" + state : "");
       locBtn.disabled = state === "busy";
@@ -352,24 +354,41 @@
                            state === "ok" ? "Standort angehängt" : "Meinen Standort anhängen";
       hint.textContent = text || "";
     }
+    function ortGefunden(pos) {
+      var c = pos.coords, acc = Math.round(c.accuracy || 0);
+      wahl.ort = { url: "https://maps.google.com/?q=" + c.latitude.toFixed(5) + "," + c.longitude.toFixed(5) };
+      setLoc("ok", (acc && acc < 1000 ? "Auf ca. " + Math.max(10, Math.round(acc / 10) * 10) + " m genau. " :
+                    acc ? "Standort ist ungenau – bitte Adresse dazuschreiben. " : "") + "Antippen zum Entfernen.");
+      render();
+    }
+    function ortFehler(err) {
+      var gesperrt = err && err.code === 1;
+      var wa = ios ? "„+“ → „Standort“" : "„+“ bzw. Büroklammer → „Standort“";
+      setLoc("", gesperrt ?
+        (ios ? "Der Standort ist gesperrt (iPhone: Einstellungen → Datenschutz & Sicherheit → Ortungsdienste → Safari-Websites). "
+             : "Standortfreigabe nicht erlaubt. ") + "Oder direkt in WhatsApp senden: " + wa + "." :
+        "Standort gerade nicht verfügbar. Schreiben Sie die Adresse dazu oder senden Sie den Standort direkt in WhatsApp (" + wa + ").");
+    }
+    var ortLauf = 0;
     if (locBtn) {
       if (!("geolocation" in navigator) || window.isSecureContext === false) {
         locBtn.hidden = true;
         hint.textContent = "Ihren Standort können Sie gleich direkt in WhatsApp senden.";
       } else locBtn.addEventListener("click", function () {
         if (wahl.ort) { wahl.ort = null; setLoc(""); render(); return; }   // erneut antippen = wieder entfernen
-        setLoc("busy");
-        navigator.geolocation.getCurrentPosition(function (pos) {
-          var c = pos.coords, acc = Math.round(c.accuracy || 0);
-          wahl.ort = { url: "https://maps.google.com/?q=" + c.latitude.toFixed(5) + "," + c.longitude.toFixed(5) };
-          setLoc("ok", (acc && acc < 1000 ? "Auf ca. " + Math.max(10, Math.round(acc / 10) * 10) + " m genau. " :
-                        acc ? "Standort ist ungenau – bitte Adresse dazuschreiben. " : "") + "Antippen zum Entfernen.");
-          render();
-        }, function (err) {
-          setLoc("", err && err.code === 1 ?
-            "Standortfreigabe nicht erlaubt. Sie können den Standort auch direkt in WhatsApp senden." :
-            "Standort gerade nicht verfügbar. Bitte Adresse in WhatsApp dazuschreiben.");
-        }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+        var id = ++ortLauf, geo = navigator.geolocation;
+        // Nur der gerade laufende Versuch darf etwas eintragen – verspätete Antworten werden ignoriert
+        function laeuft() { return id === ortLauf && locBtn.disabled; }
+        function ok(pos) { if (laeuft()) ortGefunden(pos); }
+        function fehler(err) { if (laeuft()) ortFehler(err); }
+        setLoc("busy", "Falls Ihr Browser fragt: bitte „Erlauben“ antippen.");
+        setTimeout(function () { fehler({ code: 3 }); }, 40000);   // falls der Browser gar nicht antwortet
+        geo.getCurrentPosition(ok, function (err) {
+          if (!laeuft()) return;
+          if (err && err.code === 1) return fehler(err);            // gesperrt: nochmal fragen hilft nicht
+          // Zeitüberschreitung oder kein GPS (z. B. drinnen): noch einmal ohne GPS-Genauigkeit versuchen
+          geo.getCurrentPosition(ok, fehler, { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 });
+        }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 30000 });
       });
     }
     render();
