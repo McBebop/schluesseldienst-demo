@@ -12,7 +12,6 @@ window.SITE_CONFIG = {
   // --- Kontakt ---------------------------------------------------------------
   telefon: "0621 123 456 78",          // wird angezeigt + für den Anruf-Button genutzt
   whatsapp: "0170 123 45 67",          // Handynummer, auf der WhatsApp läuft
-  whatsappText: "Hallo, ich brauche einen Schlüsseldienst. Mein Standort: ",
   email: "info@beispiel.de",
 
   adresse: {
@@ -32,10 +31,13 @@ window.SITE_CONFIG = {
     "Ordentliche Rechnung"
   ],
 
-  // --- Schnellanfrage per WhatsApp (Kasten oben auf der Startseite) -----------
-  // Der Kunde tippt an, was passiert ist, hängt auf Wunsch seinen Standort an
-  // und bekommt eine fertige WhatsApp-Nachricht. Liste leer = Auswahl ausgeblendet.
+  // --- WhatsApp-Nachricht & Schnellanfrage (Kasten oben auf der Startseite) ---
+  // Jeder WhatsApp-Button öffnet eine fertige Nachricht: erste Zeile = anfrageText,
+  // dann (bei der Schnellanfrage) „Was ist passiert“, zuletzt der standortText.
+  // Den Standort schickt der Kunde danach direkt in WhatsApp („+“ → „Standort“).
   anfrageText: "Hallo, ich brauche einen Schlüsseldienst.",
+  standortText: "Meinen Standort schicke ich Ihnen gleich.",   // leer lassen = Zeile entfällt
+  // Auswahl „Was ist passiert?“ – Liste leer = Auswahl ausgeblendet.
   situationen: [
     "Tür zugefallen",
     "Tür abgeschlossen",

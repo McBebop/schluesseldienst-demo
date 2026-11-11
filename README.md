@@ -6,7 +6,7 @@ Mobil-optimierte One-Page-Website für Schlüsseldienste. Rein statisch (HTML/CS
 - Kopfleiste mit Anruf- und WhatsApp-Button, bleibt beim Scrollen oben stehen
 - Kontaktleiste unten (Anrufen / WhatsApp), fährt ein, sobald die großen Buttons oben aus dem Bild gescrollt sind
 - **Live-Uhr und Ankunftszeit:** aus der Anfahrtszeit („20–30“) wird automatisch eine Uhrzeit („ca. 17:15–17:25 Uhr bei Ihnen“)
-- **Schnellanfrage per WhatsApp:** Kunde tippt an, was passiert ist, hängt auf Wunsch seinen Standort an und bekommt eine fertige Nachricht
+- **Schnellanfrage per WhatsApp:** Kunde tippt an, was passiert ist, und bekommt eine fertige Nachricht (inkl. Hinweis, dass er seinen Standort gleich schickt)
 - Leistungen (jede mit eigenem WhatsApp-Link), Festpreis-Übersicht, **Fair-Check** (seriös / unseriös), Ablauf, Einsatzgebiet, Bewertungen, FAQ
 - Impressum und Datenschutzerklärung (Muster), automatisch mit Kundendaten befüllt
 - Strukturierte Daten für Google (Locksmith, 24/7)
@@ -72,7 +72,7 @@ Gut zu wissen:
 4. In `index.html` bei `og:image` die Adresse auf die Kunden-Domain ändern (z. B. `https://schluesseldienst-weber.de/og.jpg`).
 5. Hosting wählen (siehe unten) und in `config.js` `hosting` passend setzen.
 6. Eigene Domain verbinden (z. B. `schluesseldienst-weber.de`).
-7. Kurz testen: Anruf-Button, WhatsApp-Button, Schnellanfrage mit Standort, Impressum.
+7. Kurz testen: Anruf-Button, WhatsApp-Button, Schnellanfrage, Impressum.
 
 ## 4. Hosting auf Cloudflare Pages
 
@@ -93,12 +93,13 @@ Alles wird in `config.js` gesteuert:
 | Einstellung | Wirkung |
 |---|---|
 | `situationen` | Auswahl „Was ist passiert?“ in der Schnellanfrage. Leere Liste = Auswahl ausgeblendet. |
-| `anfrageText` | Erster Satz der fertigen WhatsApp-Nachricht |
+| `anfrageText` | Erste Zeile der fertigen WhatsApp-Nachricht |
+| `standortText` | Letzte Zeile der WhatsApp-Nachricht, Standard: „Meinen Standort schicke ich Ihnen gleich.“ Leer lassen = Zeile entfällt. |
 | `fair.unserioes` / `fair.wir` | Die beiden Spalten im Fair-Check. `wir` leer = Bereich ausgeblendet. |
 | `anfahrtMinuten` | Wird überall angezeigt und oben in eine Uhrzeit umgerechnet (auf 5 Minuten gerundet). Ohne Zahl entfällt die Uhrzeit. |
 | `whatsapp` leer | Alle WhatsApp-Buttons und die Schnellanfrage verschwinden, die Seite arbeitet nur mit Anruf. |
 
-**Standort in der Schnellanfrage:** Der Standort wird erst abgefragt, wenn der Kunde auf „Meinen Standort anhängen“ tippt und im Browser zustimmt. Er bleibt auf dem Gerät und steht nur als Kartenlink in der Nachricht, die der Kunde selbst in WhatsApp abschickt. Die Website speichert und überträgt nichts. Lehnt der Kunde ab, funktioniert die Anfrage trotzdem.
+**Standort:** Die Website fragt den Standort bewusst nicht selbst ab (das ist in Safari auf dem iPhone und in Mini-Browsern wie dem von WhatsApp unzuverlässig). Stattdessen kündigt die Nachricht an, dass der Kunde den Standort gleich schickt – das geht in WhatsApp mit „+“ bzw. Büroklammer → „Standort“ und funktioniert auf jedem Handy.
 
 ## 6. Bewertungen
 
@@ -106,7 +107,6 @@ Alles wird in `config.js` gesteuert:
 
 ## 7. Rechtliche Hinweise (wichtig)
 
-- Impressum und Datenschutzerklärung sind **Muster** und keine Rechtsberatung. Vor dem Livegang mit den echten Angaben des Kunden prüfen bzw. mit einem Generator (z. B. eRecht24, Datenschutz-Generator.de) erstellen. Der Abschnitt „Standort in der Schnellanfrage“ muss drin bleiben, solange die Schnellanfrage genutzt wird.
-- Preise müssen Endpreise **inkl. MwSt.** sein (Preisangabenverordnung). Die Beispielpreise in `config.js` mit dem Kunden abstimmen.
+- Impressum und Datenschutzerklärung sind **Muster** und keine Rechtsberatung. Vor dem Livegang mit den echten Angaben des Kunden prüfen bzw. mit einem Generator (z. B. eRecht24, Datenschutz-Generator.de) erstellen.- Preise müssen Endpreise **inkl. MwSt.** sein (Preisangabenverordnung). Die Beispielpreise in `config.js` mit dem Kunden abstimmen.
 - Werbeaussagen („in ca. 20–30 Min. vor Ort“, „ohne Schaden“, die rechte Spalte im Fair-Check, die Haken neben der Preisliste) nur so übernehmen, wie der Kunde sie auch einhalten kann. Die angezeigte Ankunftszeit wird aus `anfahrtMinuten` berechnet – der Wert muss realistisch sein.
 - Die Seite lädt keine Google Fonts und keine externen Skripte, deshalb ist kein Cookie-Banner nötig.

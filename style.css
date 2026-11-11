@@ -281,9 +281,7 @@ section[id], main[id], aside[id] { scroll-margin-top: calc(var(--top-h) + 12px);
 .quick h2 { font-size: 1.18rem; letter-spacing: -.015em; margin: 0; }
 .quick__head p { margin: 1px 0 0; font-size: .88rem; color: var(--muted); }
 .quick__step { margin-bottom: 1rem; }
-.quick__label { display: flex; align-items: center; gap: .5rem; font-weight: 750; font-size: .95rem; margin: 0 0 .55rem; }
-.quick__label b { width: 22px; height: 22px; flex: none; border-radius: 50%; background: var(--ink); color: #fff; font-size: .76rem; display: grid; place-items: center; }
-.quick--single .quick__label b { display: none; }
+.quick__label { font-weight: 750; font-size: .95rem; margin: 0 0 .55rem; }
 .pick { display: flex; flex-wrap: wrap; gap: .45rem; }
 .pick__btn {
   -webkit-appearance: none; appearance: none; margin: 0;
@@ -295,22 +293,6 @@ section[id], main[id], aside[id] { scroll-margin-top: calc(var(--top-h) + 12px);
 }
 .pick__btn:active { transform: scale(.96); }
 .pick__btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.locbtn {
-  -webkit-appearance: none; appearance: none; margin: 0;
-  width: 100%; min-height: 50px; padding: .6rem .9rem;
-  display: flex; align-items: center; gap: .6rem; text-align: left;
-  border: 1.5px dashed #c3ccd9; border-radius: 14px; background: var(--soft); color: var(--ink);
-  font: inherit; font-weight: 650; cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transition: background-color .15s ease, border-color .15s ease;
-}
-.locbtn svg { width: 22px; height: 22px; flex: none; fill: currentColor; }
-.locbtn.is-busy { opacity: .75; cursor: progress; }
-.locbtn.is-busy svg { animation: hop .7s ease-in-out infinite alternate; }
-.locbtn.is-ok { border-style: solid; border-color: var(--wa); background: rgba(var(--wa-rgb), .12); }
-.locbtn.is-ok svg { fill: #15803d; }
-@keyframes hop { from { transform: translateY(1px); } to { transform: translateY(-4px); } }
-.quick__hint { font-size: .84rem; color: var(--muted); margin: .4rem 0 0; }
-.quick__hint:empty { display: none; }
 .bubble {
   position: relative; margin: 0 0 .9rem 1.75rem; padding: .65rem .8rem 1.25rem;
   background: #dcf8c6; color: #10251a; border-radius: 14px 14px 4px 14px;

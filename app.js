@@ -159,11 +159,15 @@
   /* ---------- Links ---------- */
   var waNr = waNumber(C.whatsapp);
   function waLink(text) { return "https://wa.me/" + waNr + (text ? "?text=" + encodeURIComponent(text) : ""); }
+  // WhatsApp-Text: erste Zeile (anfrageText) + letzte Zeile (standortText, z. B. „Meinen Standort schicke ich Ihnen gleich.“)
   var gruss = C.anfrageText || "Hallo, ich brauche einen Schlüsseldienst.";
+  var standort = C.standortText != null ? C.standortText : "Meinen Standort schicke ich Ihnen gleich.";
+  function nachricht(zeilen) { return zeilen.concat(standort ? [standort] : []).join("\n"); }
+  var grundText = C.whatsappText || [gruss, standort].filter(Boolean).join(" ");   // whatsappText: alter Einzeltext, falls noch gesetzt
 
   each(doc.querySelectorAll('[data-href="tel"]'), function (a) { a.href = telHref(C.telefon); });
   each(doc.querySelectorAll('[data-href="wa"]'), function (a) {
-    if (waNr) a.href = waLink(C.whatsappText); else a.hidden = true;   // ohne WhatsApp-Nummer: Buttons ausblenden
+    if (waNr) a.href = waLink(grundText); else a.hidden = true;   // ohne WhatsApp-Nummer: Buttons ausblenden
   });
   each(doc.querySelectorAll('[data-href="mail"]'), function (a) { a.href = "mailto:" + (C.email || ""); });
   each(doc.querySelectorAll('[data-href="google"]'), function (a) {
@@ -208,7 +212,7 @@
     // Direkt-Link: WhatsApp-Nachricht mit der gewählten Leistung (ohne WhatsApp: Anruf)
     var a = el("a", "svc__go", waNr ? "Per WhatsApp anfragen" : "Jetzt anrufen");
     if (waNr) {
-      a.href = waLink(gruss + "\nEs geht um: " + it.titel + "\nMein Standort: ");
+      a.href = waLink(nachricht([gruss, "Es geht um: " + it.titel]));
       a.target = "_blank";
       a.rel = "noopener";
     } else {
@@ -295,45 +299,41 @@
   if (clocks.length || etas.length) { tick(); setInterval(tick, 20000); }
 
   /* ---------- Schnellanfrage: fertige WhatsApp-Nachricht zusammenstellen ----------
-     Der Standort wird nur nach Antippen und Zustimmung im Browser abgefragt, bleibt auf
-     dem Gerät und landet erst in der Nachricht, die der Kunde selbst in WhatsApp abschickt. */
+     Der Kunde tippt an, was passiert ist, und öffnet WhatsApp mit einer fertigen Nachricht.
+     Abgeschickt wird sie erst von ihm selbst. Seinen Standort schickt er danach direkt in
+     WhatsApp – die Nachricht kündigt das an (standortText in config.js). */
   var quick = doc.getElementById("anfrage");
   if (quick && !waNr) { quick.hidden = true; doc.body.className += " no-quick"; }
   if (quick && waNr) (function () {
-    var wahl = { was: "", ort: null };
+    var wahl = { was: "" };
     var preview = doc.getElementById("quick-preview");
     var send = doc.getElementById("quick-send");
     var pick = quick.querySelector('[data-list="situationen"]');
-    var locBtn = doc.getElementById("loc-btn");
-    var locTxt = locBtn ? locBtn.querySelector("span") : null;
-    var hint = doc.getElementById("loc-hint");
 
-    function zeile(label, wert, leer) {
+    function zeile(label, wert) {
       var z = el("span", "bubble__line", label);
       if (wert) z.appendChild(el("b", null, wert));
-      else if (leer) z.appendChild(el("i", null, leer));
       return z;
     }
     function render() {
       var lines = [gruss];
       if (wahl.was) lines.push("Was ist passiert: " + wahl.was);
-      lines.push("Mein Standort: " + (wahl.ort ? wahl.ort.url : ""));
-      send.href = waLink(lines.join("\n"));
+      send.href = waLink(nachricht(lines));
       if (!preview) return;
       preview.textContent = "";
       preview.appendChild(zeile(gruss));
       if (wahl.was) preview.appendChild(zeile("Was ist passiert: ", wahl.was));
-      preview.appendChild(zeile("Mein Standort: ", wahl.ort ? wahl.ort.url.replace("https://", "") : "", "noch offen"));
+      if (standort) preview.appendChild(zeile(standort));
     }
 
-    // Schritt 1: Situation wählen
+    // Situation wählen
     var n = list("situationen", function (t) {
       var b = el("button", "pick__btn", t);
       b.type = "button";
       b.setAttribute("aria-pressed", "false");
       return b;
     });
-    if (!n) { doc.getElementById("quick-was").hidden = true; quick.className += " quick--single"; }
+    if (!n) doc.getElementById("quick-was").hidden = true;
     else pick.addEventListener("click", function (ev) {
       var b = ev.target;
       if (!b || b.className.indexOf("pick__btn") < 0) return;
@@ -343,35 +343,6 @@
       wahl.was = an ? b.textContent : "";
       render();
     });
-
-    // Schritt 2: Standort anhängen (optional)
-    function setLoc(state, text) {
-      locBtn.className = "locbtn" + (state ? " is-" + state : "");
-      locBtn.disabled = state === "busy";
-      locTxt.textContent = state === "busy" ? "Standort wird ermittelt …" :
-                           state === "ok" ? "Standort angehängt" : "Meinen Standort anhängen";
-      hint.textContent = text || "";
-    }
-    if (locBtn) {
-      if (!("geolocation" in navigator) || window.isSecureContext === false) {
-        locBtn.hidden = true;
-        hint.textContent = "Ihren Standort können Sie gleich direkt in WhatsApp senden.";
-      } else locBtn.addEventListener("click", function () {
-        if (wahl.ort) { wahl.ort = null; setLoc(""); render(); return; }   // erneut antippen = wieder entfernen
-        setLoc("busy");
-        navigator.geolocation.getCurrentPosition(function (pos) {
-          var c = pos.coords, acc = Math.round(c.accuracy || 0);
-          wahl.ort = { url: "https://maps.google.com/?q=" + c.latitude.toFixed(5) + "," + c.longitude.toFixed(5) };
-          setLoc("ok", (acc && acc < 1000 ? "Auf ca. " + Math.max(10, Math.round(acc / 10) * 10) + " m genau. " :
-                        acc ? "Standort ist ungenau – bitte Adresse dazuschreiben. " : "") + "Antippen zum Entfernen.");
-          render();
-        }, function (err) {
-          setLoc("", err && err.code === 1 ?
-            "Standortfreigabe nicht erlaubt. Sie können den Standort auch direkt in WhatsApp senden." :
-            "Standort gerade nicht verfügbar. Bitte Adresse in WhatsApp dazuschreiben.");
-        }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
-      });
-    }
     render();
   })();
 
